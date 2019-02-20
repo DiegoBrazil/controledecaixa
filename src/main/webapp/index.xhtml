@@ -11,6 +11,38 @@
 	</h:head>
 	
 	<h:body>
-		<p:inputText placeholder="Texto"></p:inputText>
+		<p:dataTable id="tbCaixas" value="#{caixaController.listar()}"
+	var="caixa" paginatorPosition="bottom" rows="5" paginator="true"
+	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	rowsPerPageTemplate="5,10,15" emptyMessage="Registros não encontrados"
+	selection="#{caixaController.caixa}" filterEvent="enter"
+	rowKey="#{caixa.id}" selectionMode="single">
+	<f:facet name="header">Lista de caixas</f:facet>
+
+	<p:column headerText="C&oacute;digo" style="width: 75px"
+		sortBy="#{caixa.id}" filterMatchMode="exact" filterBy="#{caixa.id}">
+		<h:outputText value="#{caixa.id}" />
+	</p:column>
+
+	<p:column headerText="Nome" style="width: 150px" sortBy="#{caixa.nome}"
+		filterMatchMode="contains" filterBy="#{caixa.nome}">
+		<h:outputText value="#{caixa.nome}" />
+	</p:column>
+
+	<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
+		sortBy="#{caixa.descricao}" filterMatchMode="contains"
+		filterBy="#{caixa.descricao}">
+		<h:outputText value="#{caixa.descricao}" />
+	</p:column>
+
+	<p:column headerText="Excluir" style="width: 50px; text-align: center;">
+		<p:commandButton icon="ui-icon-trash"
+			title="Clique para excluir o item selecionado."
+			oncomplete="PF('confirmation').show();">
+			<f:setPropertyActionListener
+				target="#{caixaController.caixaSelecionado}" value="#{caixa}" />
+		</p:commandButton>
+	</p:column>
+</p:dataTable>
 	</h:body>
 </html>

@@ -2,40 +2,19 @@ package br.com.dbrazil.ccaixa.entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "caixa")
-public class Caixa {
+public class Caixa extends Entidade{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
-
 	@Column(name = "descricao")
 	private String descricao;
 
 	@Column(name = "saldo_inicial")
 	private String saldoInicial;
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the descricao

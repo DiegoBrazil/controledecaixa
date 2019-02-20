@@ -4,50 +4,32 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "movimentacao")
-public class Movimentacao {
+public class Movimentacao extends Entidade {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
 
 	@Column(name = "data")
 	private Date data;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
-	private String tipo;
-	
+	private TipoMovimentacao tipo;
+
 	@ManyToOne
 	private Caixa caixa;
-	
+
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@Column(name = "valor")
 	private Double valor;
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the data
@@ -66,14 +48,14 @@ public class Movimentacao {
 	/**
 	 * @return the tipo
 	 */
-	public String getTipo() {
+	public TipoMovimentacao getTipo() {
 		return tipo;
 	}
 
 	/**
 	 * @param tipo the tipo to set
 	 */
-	public void setTipo(String tipo) {
+	public void setTipo(TipoMovimentacao tipo) {
 		this.tipo = tipo;
 	}
 
