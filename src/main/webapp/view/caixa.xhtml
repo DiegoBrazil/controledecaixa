@@ -19,9 +19,8 @@
 					widgetVar="confirmation">
 
 					<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
-						icon="ui-icon-check"
-						actionListener="#{caixaController.excluir()}" update="@(form)"
-						oncomplete="PF('confirmation').hide();" />
+						icon="ui-icon-check" actionListener="#{caixaController.excluir()}"
+						update="@(form)" oncomplete="PF('confirmation').hide();" />
 
 					<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
 						icon="ui-icon-close" onclick="PF('confirmation').hide();" />
@@ -34,7 +33,10 @@
 					emptyMessage="Registros não encontrados"
 					selection="#{caixaController.caixa}" filterEvent="enter"
 					rowKey="#{caixa.id}" selectionMode="single">
-					<f:facet name="header">Lista de caixas</f:facet>
+					<f:facet name="header">Caixas</f:facet>
+
+					<p:ajax event="rowSelect" listener="#{caixaController.editar}"
+						update="cadastro" oncomplete="PF('dlg1').show();" />
 
 					<p:column headerText="C&oacute;digo" style="width: 75px"
 						sortBy="#{caixa.id}" filterMatchMode="contains"
@@ -90,9 +92,9 @@
 						<h:outputLabel value="C&oacute;digo" for="txtId"
 							rendered="#{caixaController.caixa.id != null}" />
 						<p:inputText id="txtId"
-							rendered="#{caixaController.caixa.id != null}"
-							disabled="true" value="#{caixaController.caixa.id}"
-							size="10" label="C&oacute;digo" />
+							rendered="#{caixaController.caixa.id != null}" disabled="true"
+							value="#{caixaController.caixa.id}" size="10"
+							label="C&oacute;digo" />
 
 						<h:outputLabel value="Descrição" for="txtDescricao" />
 						<p:inputText id="txtDescricao"
@@ -101,12 +103,11 @@
 							required="true"
 							requiredMessage="Por favor informe a descri&ccedil;&atilde;o."
 							label="descri&ccedil;&atilde;o" />
-						
+
 						<h:outputLabel value="Saldo Inicial" for="txtSaldoInicial" />
 						<p:inputText id="txtSaldoInicial"
 							value="#{caixaController.caixa.saldoInicial}" maxlength="250"
-							size="40" placeholder="Informe o saldo inicial"
-							required="true"
+							size="40" placeholder="Informe o saldo inicial" required="true"
 							requiredMessage="Por favor informe saldo inicial."
 							label="saldo inicial" />
 					</p:panelGrid>

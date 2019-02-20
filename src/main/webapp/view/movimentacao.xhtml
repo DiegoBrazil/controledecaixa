@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:panelGrid id="divTable">
+		<p:fieldset id="fdsMovimentacoes">
+			<h:form id="frmListar" prependId="false">
+				<!-- Deve ser adicionado dentro da listagem -->
+				<p:confirmDialog id="confirmDialog" severity="alert"
+					header="Exclusão" message="Confirma a exclusão?"
+					widgetVar="confirmation">
+
+					<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-check"
+						actionListener="#{movimentacaoController.excluir()}"
+						update="@(form)" oncomplete="PF('confirmation').hide();" />
+
+					<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+						icon="ui-icon-close" onclick="PF('confirmation').hide();" />
+				</p:confirmDialog>
+				<p:growl />
+				<p:dataTable id="tbMovimentacoes"
+					value="#{movimentacaoController.listar()}" var="movimentacao"
+					paginatorPosition="bottom" rows="5" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					emptyMessage="Registros não encontrados"
+					selection="#{movimentacaoController.movimentacao}"
+					filterEvent="enter" rowKey="#{movimentacao.id}"
+					selectionMode="single">
+					<f:facet name="header">Movimentações</f:facet>
+
+					<p:ajax event="rowSelect"
+						listener="#{movimentacaoController.editar}" update="cadastro"
+						oncomplete="PF('dlg1').show();" />
+
+					<p:column headerText="C&oacute;digo" style="width: 75px"
+						sortBy="#{movimentacao.id}" filterMatchMode="contains"
+						filterBy="#{movimentacao.id}">
+						<h:outputText value="#{movimentacao.id}" />
+					</p:column>
+
+					<p:column headerText="Data" style="width: 75px"
+						sortBy="#{movimentacao.data}" filterMatchMode="contains"
+						filterBy="#{movimentacao.data}">
+						<h:outputText value="#{movimentacao.data}" />
+					</p:column>
+
+					<p:column headerText="Tipo" style="width: 75px"
+						sortBy="#{movimentacao.tipo}" filterMatchMode="contains"
+						filterBy="#{movimentacao.tipo}">
+						<h:outputText value="#{movimentacao.tipo}" />
+					</p:column>
+
+					<p:column headerText="Caixa" style="width: 75px"
+						sortBy="#{movimentacao.caixa}" filterMatchMode="contains"
+						filterBy="#{movimentacao.caixa}">
+						<h:outputText value="#{movimentacao.caixa}" />
+					</p:column>
+
+					<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
+						sortBy="#{movimentacao.descricao}" filterMatchMode="contains"
+						filterBy="#{movimentacao.descricao}">
+						<h:outputText value="#{movimentacao.descricao}" />
+					</p:column>
+
+					<p:column headerText="Valor" style="width: 150px"
+						sortBy="#{movimentacao.valor}" filterMatchMode="contains"
+						filterBy="#{movimentacao.valor}">
+						<h:outputText value="#{movimentacao.valor}" />
+					</p:column>
+
+					<p:column headerText="Excluir"
+						style="width: 50px; text-align: center;">
+						<p:commandButton icon="ui-icon-trash"
+							title="Clique para excluir o item selecionado."
+							oncomplete="PF('confirmation').show();">
+							<f:setPropertyActionListener
+								target="#{movimentacaoController.movimentacaoSelecionado}"
+								value="#{movimentacao}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+
+		<p:spacer height="2px" />
+
+		<div>
+			<p:panel id="panRodape">
+				<h:form>
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						update="cadastro" oncomplete="PF('dlg1').show();"
+						action="#{movimentacaoController.novo()}" />
+				</h:form>
+			</p:panel>
+		</div>
+	</h:panelGrid>
+
+	<h:panelGrid id="divForm">
+		<p:dialog header="Cadastrar" widgetVar="dlg1" minHeight="200"
+			minWidth="500" resizable="false" position="250, 150" closable="true">
+			<h:form id="cadastro" prependId="false">
+				<p:growl />
+				<p:panel id="panDados" header="Cadastro de Movimentações">
+					<p:panelGrid columns="2" style="width: 100%">
+						<h:outputLabel value="C&oacute;digo" for="txtId"
+							rendered="#{movimentacaoController.movimentacao.id != null}" />
+						<p:inputText id="txtId"
+							rendered="#{movimentacaoController.movimentacao.id != null}"
+							disabled="true" value="#{movimentacaoController.movimentacao.id}"
+							size="10" label="C&oacute;digo" />
+
+						<h:outputLabel value="Data" for="txtData" />
+						<p:inputText id="txtData"
+							value="#{movimentacaoController.movimentacao.data}"
+							maxlength="250" size="40" placeholder="Informe a data"
+							required="true" requiredMessage="Por favor informe a data."
+							label="data" />
+
+						<h:outputLabel value="Tipo" for="txtTipo" />
+						<p:inputText id="txtTipo"
+							value="#{movimentacaoController.movimentacao.tipo}"
+							maxlength="250" size="40" placeholder="Informe o tipo"
+							required="true" requiredMessage="Por favor informe o tipo"
+							label="tipo" />
+
+						<h:outputLabel value="Caixa" for="txtCaixa" />
+						<p:inputText id="txtCaixa"
+							value="#{movimentacaoController.movimentacao.caixa}"
+							maxlength="250" size="40" placeholder="Informe o caixa"
+							required="true" requiredMessage="Por favor informe o caixa."
+							label="caixa" />
+
+						<h:outputLabel value="Descrição" for="txtDescricao" />
+						<p:inputText id="txtDescricao"
+							value="#{movimentacaoController.movimentacao.descricao}"
+							maxlength="250" size="40"
+							placeholder="Informe a descri&ccedil;&atilde;o" required="true"
+							requiredMessage="Por favor informe a descri&ccedil;&atilde;o."
+							label="descri&ccedil;&atilde;o" />
+
+						<h:outputLabel value="Valor" for="txtValor" />
+						<p:inputText id="txtValor"
+							value="#{movimentacaoController.movimentacao.valor}"
+							maxlength="250" size="40" placeholder="Informe o valor"
+							required="true" requiredMessage="Por favor informe valor."
+							label="valor" />
+					</p:panelGrid>
+
+					<f:facet name="footer" style="text-align:center">
+						<p:commandButton id="btnGravar" value="Gravar"
+							action="#{movimentacaoController.salvar()}" update="@(form)" />
+
+						<p:commandButton id="btnLimpar" value="Limpar"
+							actionListener="#{movimentacaoController.limpar()}" type="reset" />
+					</f:facet>
+				</p:panel>
+			</h:form>
+
+			<p:ajax event="close" update="frmListar" />
+		</p:dialog>
+	</h:panelGrid>
+</h:body>
+</html>
