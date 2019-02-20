@@ -1,12 +1,13 @@
 package br.com.dbrazil.ccaixa.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.dbrazil.ccaixa.entidade.Caixa;
+import br.com.dbrazil.ccaixa.neg.CaixaNeg;
 import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
 
 @ManagedBean
@@ -14,6 +15,9 @@ import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
 public class CaixaController extends GenericFaces {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty("#{caixaNeg}")
+	private CaixaNeg caixaNeg;
 
 	private Caixa caixa;
 	private Caixa caixaSelecionado;
@@ -42,7 +46,7 @@ public class CaixaController extends GenericFaces {
 	}
 
 	public List<Caixa> listar() {
-		return new ArrayList<Caixa>();
+		return caixaNeg.listaTudo();
 	}
 
 	public void limpar() {

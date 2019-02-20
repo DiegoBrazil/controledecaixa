@@ -18,7 +18,7 @@
 	<!-- Configure annotated beans do spring -->
     <context:component-scan base-package="br.com.dbrazil" />
     
-    <!-- Importa as configuraçõws do DS -->
+    <!-- Importa as configurações do DS -->
     <import resource="application-datasource.xml" />
     
 </beans>

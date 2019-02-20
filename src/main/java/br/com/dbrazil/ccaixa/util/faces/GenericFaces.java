@@ -52,7 +52,7 @@ public abstract class GenericFaces implements Serializable {
 	}
 	
 	/**
-	 * Adiciona uma mensagem de erro no contexto do faces utilizando-se da exece��o
+	 * Adiciona uma mensagem de erro no contexto do faces utilizando-se da execeção
 	 * @param ex
 	 */
 	protected void addErrorMensagem(Exception ex){
@@ -76,13 +76,13 @@ public abstract class GenericFaces implements Serializable {
 	}
 	
 	/**
-	 * Retorna uma lista de SelectItem contento a op��o Sim e N�o
+	 * Retorna uma lista de SelectItem contento a opção Sim e Não
 	 * @return
 	 */
 	protected List<SelectItem> retornaListaSimNao() {
 		List<SelectItem> listaSimNao =new ArrayList<SelectItem>();
 		listaSimNao.add(new SelectItem("S", "Sim"));
-		listaSimNao.add(new SelectItem("N", "N�o"));
+		listaSimNao.add(new SelectItem("N", "Não"));
 		
 		return listaSimNao;
 	}
