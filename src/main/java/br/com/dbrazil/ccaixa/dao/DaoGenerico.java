@@ -8,6 +8,8 @@ import br.com.dbrazil.ccaixa.entidade.Entidade;
 public interface DaoGenerico<T extends Entidade, PK extends Serializable> {
 
 	public void save(T entidade);
+	
+	public void delete(T entidade);
 
 	public void saveOrUpdate(T entidade);
 

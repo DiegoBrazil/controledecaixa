@@ -36,23 +36,20 @@ public class CaixaNeg extends GenericNegImpl<Caixa, Integer> {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void salvar(Caixa ambiente) throws ValidarException {
-		this.salvarOuAtualizar(ambiente);
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void salvarOuAtualizar(Caixa ambiente) throws ValidarException {
-		this.verificarCaixaExistente(ambiente);
-		super.salvarOuAtualizar(ambiente);
+	public void salvar(Caixa caixa) throws ValidarException {
+		this.salvarOuAtualizar(caixa);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deletar(Caixa ambiente) throws Exception {
-		if (ambiente.getId() == null) {
-			throw new ValidarException("Selecione uma caixa!");
+	public void deletar(Caixa caixa) throws ValidarException {
+		try {
+			if (caixa.getId() == null) {
+				throw new ValidarException("Selecione um caixa!");
+			}
+			this.excluir(caixa);
+		} catch (Exception e) {
+			throw new ValidarException("Houve um erro ao excluir!");
 		}
-		super.removerLogicamente(ambiente);
 	}
 
 	public List<Caixa> listarPeloNome(String nome) {
@@ -62,14 +59,4 @@ public class CaixaNeg extends GenericNegImpl<Caixa, Integer> {
 		return ((CaixaDao) getDao()).listarPeloNome(nome);
 	}
 
-	private void verificarCaixaExistente(Caixa obj) throws ValidarException {
-		Caixa caixa = this.buscarPorId(obj.getId());
-		if (caixa != null) {
-			if (caixa.getId() != null) {
-				if (caixa.getId() != obj.getId()) {
-					throw new ValidarException("Caixa já cadastrado!");
-				}
-			}
-		}
-	}
 }

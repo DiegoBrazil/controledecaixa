@@ -47,8 +47,8 @@ public abstract class GenericNegImpl<T extends Entidade, PK extends Serializable
 		}
 	}
 	
-	public void removerLogicamente(T t)throws ValidarException{
-		this.dao.removeLogicamente(t);
+	public void excluir(T t)throws ValidarException{
+		this.dao.delete(t);
 	}
 	
 	public T buscarPorId(PK id){

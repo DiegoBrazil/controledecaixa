@@ -54,6 +54,12 @@ public abstract class DaoGenericoJpa<E extends Entidade, PK extends Serializable
 		Entidade entidade = this.getEntityManager().find(this.classe, ((Entidade) obj).getId());
 		this.getEntityManager().merge(entidade);
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(E obj) {
+		Entidade entidade = this.getEntityManager().find(this.classe, ((Entidade) obj).getId());
+		this.getEntityManager().remove(entidade);
+	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public E buscaPorId(PK id) {

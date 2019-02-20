@@ -10,41 +10,119 @@
 </h:head>
 
 <h:body>
-	<p:dataTable id="tbCaixas" value="#{caixaController.listar()}"
-		var="caixa" paginatorPosition="bottom" rows="5" paginator="true"
-		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="5,10,15" emptyMessage="Registros não encontrados"
-		selection="#{caixaController.caixa}" filterEvent="enter"
-		rowKey="#{caixa.id}" selectionMode="single">
-		<f:facet name="header">Lista de caixas</f:facet>
+	<h:panelGrid id="divTable">
+		<p:fieldset id="fdsCaixas">
+			<h:form id="frmListar" prependId="false">
+				<!-- Deve ser adicionado dentro da listagem -->
+				<p:confirmDialog id="confirmDialog" severity="alert"
+					header="Exclusão" message="Confirma a exclusão?"
+					widgetVar="confirmation">
 
-		<p:column headerText="C&oacute;digo" style="width: 75px"
-			sortBy="#{caixa.id}" filterMatchMode="contains"
-			filterBy="#{caixa.id}">
-			<h:outputText value="#{caixa.id}" />
-		</p:column>
+					<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-check"
+						actionListener="#{caixaController.excluir()}" update="@(form)"
+						oncomplete="PF('confirmation').hide();" />
 
-		<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
-			sortBy="#{caixa.descricao}" filterMatchMode="contains"
-			filterBy="#{caixa.descricao}">
-			<h:outputText value="#{caixa.descricao}" />
-		</p:column>
+					<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+						icon="ui-icon-close" onclick="PF('confirmation').hide();" />
+				</p:confirmDialog>
+				<p:growl />
+				<p:dataTable id="tbCaixas" value="#{caixaController.listar()}"
+					var="caixa" paginatorPosition="bottom" rows="5" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					emptyMessage="Registros não encontrados"
+					selection="#{caixaController.caixa}" filterEvent="enter"
+					rowKey="#{caixa.id}" selectionMode="single">
+					<f:facet name="header">Lista de caixas</f:facet>
 
-		<p:column headerText="Saldo Inicial" style="width: 150px"
-			sortBy="#{caixa.saldoInicial}" filterMatchMode="contains"
-			filterBy="#{caixa.saldoInicial}">
-			<h:outputText value="#{caixa.saldoInicial}" />
-		</p:column>
+					<p:column headerText="C&oacute;digo" style="width: 75px"
+						sortBy="#{caixa.id}" filterMatchMode="contains"
+						filterBy="#{caixa.id}">
+						<h:outputText value="#{caixa.id}" />
+					</p:column>
 
-		<p:column headerText="Excluir"
-			style="width: 50px; text-align: center;">
-			<p:commandButton icon="ui-icon-trash"
-				title="Clique para excluir o item selecionado."
-				oncomplete="PF('confirmation').show();">
-				<f:setPropertyActionListener
-					target="#{caixaController.caixaSelecionado}" value="#{caixa}" />
-			</p:commandButton>
-		</p:column>
-	</p:dataTable>
+					<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
+						sortBy="#{caixa.descricao}" filterMatchMode="contains"
+						filterBy="#{caixa.descricao}">
+						<h:outputText value="#{caixa.descricao}" />
+					</p:column>
+
+					<p:column headerText="Saldo Inicial" style="width: 150px"
+						sortBy="#{caixa.saldoInicial}" filterMatchMode="contains"
+						filterBy="#{caixa.saldoInicial}">
+						<h:outputText value="#{caixa.saldoInicial}" />
+					</p:column>
+
+					<p:column headerText="Excluir"
+						style="width: 50px; text-align: center;">
+						<p:commandButton icon="ui-icon-trash"
+							title="Clique para excluir o item selecionado."
+							oncomplete="PF('confirmation').show();">
+							<f:setPropertyActionListener
+								target="#{caixaController.caixaSelecionado}" value="#{caixa}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+
+		<p:spacer height="2px" />
+
+		<div>
+			<p:panel id="panRodape">
+				<h:form>
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						update="cadastro" oncomplete="PF('dlg1').show();"
+						action="#{caixaController.novo()}" />
+				</h:form>
+			</p:panel>
+		</div>
+	</h:panelGrid>
+
+	<h:panelGrid id="divForm">
+		<p:dialog header="Cadastrar" widgetVar="dlg1" minHeight="200"
+			minWidth="500" resizable="false" position="250, 150" closable="true">
+			<h:form id="cadastro" prependId="false">
+				<p:growl />
+				<p:panel id="panDados" header="Cadastro de caixas">
+					<p:panelGrid columns="2" style="width: 100%">
+						<h:outputLabel value="C&oacute;digo" for="txtId"
+							rendered="#{caixaController.caixa.id != null}" />
+						<p:inputText id="txtId"
+							rendered="#{caixaController.caixa.id != null}"
+							disabled="true" value="#{caixaController.caixa.id}"
+							size="10" label="C&oacute;digo" />
+
+						<h:outputLabel value="Descrição" for="txtDescricao" />
+						<p:inputText id="txtDescricao"
+							value="#{caixaController.caixa.descricao}" maxlength="250"
+							size="40" placeholder="Informe a descri&ccedil;&atilde;o"
+							required="true"
+							requiredMessage="Por favor informe a descri&ccedil;&atilde;o."
+							label="descri&ccedil;&atilde;o" />
+						
+						<h:outputLabel value="Saldo Inicial" for="txtSaldoInicial" />
+						<p:inputText id="txtSaldoInicial"
+							value="#{caixaController.caixa.saldoInicial}" maxlength="250"
+							size="40" placeholder="Informe o saldo inicial"
+							required="true"
+							requiredMessage="Por favor informe saldo inicial."
+							label="saldo inicial" />
+					</p:panelGrid>
+
+					<f:facet name="footer" style="text-align:center">
+						<p:commandButton id="btnGravar" value="Gravar"
+							action="#{caixaController.salvar()}" update="@(form)" />
+
+						<p:commandButton id="btnLimpar" value="Limpar"
+							actionListener="#{caixaController.limpar()}" type="reset" />
+					</f:facet>
+				</p:panel>
+			</h:form>
+
+			<p:ajax event="close" update="frmListar" />
+		</p:dialog>
+	</h:panelGrid>
 </h:body>
 </html>

@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.dbrazil.ccaixa.entidade.Caixa;
 import br.com.dbrazil.ccaixa.neg.CaixaNeg;
+import br.com.dbrazil.ccaixa.util.exception.ValidarException;
 import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
 
 @ManagedBean
@@ -32,7 +33,14 @@ public class CaixaController extends GenericFaces {
 	}
 
 	public void salvar() {
-		this.addInfoMensagem("Teste");
+		try {
+			this.caixaNeg.salvar(this.caixa);
+			this.addInfoMensagem("Caixa salvo com sucesso.");
+			this.novo();
+			this.listar();
+		} catch (ValidarException e) {
+			this.addInfoMensagem(e.getMessage());
+		}
 	}
 
 	public void editar() {
@@ -42,7 +50,16 @@ public class CaixaController extends GenericFaces {
 	}
 
 	public void excluir() {
-		this.addInfoMensagem("Teste");
+		if (this.caixaSelecionado != null) {
+			try {
+				this.caixaNeg.deletar(caixaSelecionado);
+				this.listar();
+			} catch (ValidarException e) {
+				this.addInfoMensagem(e.getMessage());
+			}
+		} else {
+			this.addInfoMensagem("Selecione um ambiente.");
+		}
 	}
 
 	public List<Caixa> listar() {
@@ -78,4 +95,18 @@ public class CaixaController extends GenericFaces {
 		this.listaCaixa = listaCaixa;
 	}
 
+	/**
+	 * @return the caixaNeg
+	 */
+	public CaixaNeg getCaixaNeg() {
+		return caixaNeg;
+	}
+
+	/**
+	 * @param caixaNeg the caixaNeg to set
+	 */
+	public void setCaixaNeg(CaixaNeg caixaNeg) {
+		this.caixaNeg = caixaNeg;
+	}
+	
 }
