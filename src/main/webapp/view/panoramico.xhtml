@@ -10,81 +10,86 @@
 </h:head>
 
 <h:body>
-	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-		<p:selectOneMenu id="selAno" value="#{panoramicoController.ano}"
-			style="width:125px">
-			<f:selectItem itemLabel="2010" itemValue="2010" />
-			<f:selectItem itemLabel="2011" itemValue="2011" />
-			<f:selectItem itemLabel="2012" itemValue="2012" />
-			<f:selectItem itemLabel="2013" itemValue="2013" />
-		</p:selectOneMenu>
+	<h:form id="frmPanoramico" prependId="false">
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:selectOneMenu id="selAno" value="#{panoramicoController.ano}"
+				style="width:125px">
+				<f:selectItem itemLabel="2010" itemValue="2010" />
+				<f:selectItem itemLabel="2011" itemValue="2011" />
+				<f:selectItem itemLabel="2012" itemValue="2012" />
+				<f:selectItem itemLabel="2013" itemValue="2013" />
+				<p:ajax event="change" update="@(form)" />
+			</p:selectOneMenu>
 
-		<p:selectOneButton id="selMes" value="#{panoramicoController.mes}">
-			<f:selectItem itemLabel="Janeiro" itemValue="1" />
-			<f:selectItem itemLabel="Fevereiro" itemValue="2" />
-			<f:selectItem itemLabel="Março" itemValue="3" />
-		</p:selectOneButton>
-	</h:panelGrid>
-
-	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-		<p:outputLabel id="mesAno"
-			value="#{panoramicoController.mes}/#{panoramicoController.ano}"
-			style="width:125px" />
+			<p:selectOneButton id="selMes" value="#{panoramicoController.mes}">
+				<f:selectItems value="#{panoramicoController.meses}" var="mes"
+					itemValue="#{mes}" itemLabel="#{mes.descricao}" />
+					<p:ajax event="change" update="@(form)" />
+			</p:selectOneButton>
+		</h:panelGrid>
 
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="selCaixa" value="Caixa" />
-			<p:selectOneMenu id="selCaixa" value="#{panoramicoController.caixa}">
-				<f:selectItem itemLabel="Conta Corrente - Itau" itemValue="2" />
-			</p:selectOneMenu>
+			<p:outputLabel id="mesAno"
+				value="#{panoramicoController.mes.descricao}/#{panoramicoController.ano}"
+				style="width:125px" />
+
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel for="selCaixa" value="Caixa" />
+				<p:selectOneMenu id="selCaixa" value="#{panoramicoController.caixa}">
+					<f:selectItem itemLabel="Conta Corrente - Itau" itemValue="2" />
+					<p:ajax event="change" update="@(form)" />
+				</p:selectOneMenu>
+			</h:panelGrid>
 		</h:panelGrid>
-	</h:panelGrid>
 
-	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-		<p:fieldset legend="Entradas e Saídas do Mês"
-			style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Entradas:" style="width:125px" />
-				<p:outputLabel value="Entradas" style="width:125px" />
-				<p:outputLabel value="Saídas:" style="width:125px" />
-				<p:outputLabel value="Saídas" style="width:125px" />
-				<p:outputLabel value="Saldo:" style="width:125px" />
-				<p:outputLabel value="Saldo" style="width:125px" />
-			</h:panelGrid>
-		</p:fieldset>
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:fieldset legend="Entradas e Saídas do Mês"
+				style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel value="Entradas:" style="width:125px" />
+					<p:outputLabel value="Entradas" style="width:125px" />
+					<p:outputLabel value="Saídas:" style="width:125px" />
+					<p:outputLabel value="Saídas" style="width:125px" />
+					<p:outputLabel value="Saldo:" style="width:125px" />
+					<p:outputLabel value="Saldo" style="width:125px" />
+				</h:panelGrid>
+			</p:fieldset>
 
-		<p:fieldset legend="Balanço Geral" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Entradas:" style="width:125px" />
-				<p:outputLabel value="Entradas" style="width:125px" />
-				<p:outputLabel value="Saídas:" style="width:125px" />
-				<p:outputLabel value="Saídas" style="width:125px" />
-				<p:outputLabel value="Saldo:" style="width:125px" />
-				<p:outputLabel value="Saldo" style="width:125px" />
-			</h:panelGrid>
-		</p:fieldset>
-	</h:panelGrid>
+			<p:fieldset legend="Balanço Geral" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel value="Entradas:" style="width:125px" />
+					<p:outputLabel value="Entradas" style="width:125px" />
+					<p:outputLabel value="Saídas:" style="width:125px" />
+					<p:outputLabel value="Saídas" style="width:125px" />
+					<p:outputLabel value="Saldo:" style="width:125px" />
+					<p:outputLabel value="Saldo" style="width:125px" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:panelGrid>
 
-	<p:dataTable id="tbMovimentacoes"
-		value="#{panoramicoController.movimentacoesMes}" var="movimentacao"
-		paginatorPosition="bottom" rows="5" paginator="true"
-		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="5,10,15" emptyMessage="Registros não encontrados" filterEvent="enter"
-		rowKey="#{movimentacao.id}">
-		<f:facet name="header">Movimentações do Mês</f:facet>
+		<p:dataTable id="tbMovimentacoes"
+			value="#{panoramicoController.movimentacoesMes}" var="movimentacao"
+			paginatorPosition="bottom" rows="5" paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15"
+			emptyMessage="Registros não encontrados" filterEvent="enter"
+			rowKey="#{movimentacao.id}">
+			<f:facet name="header">Movimentações do Mês</f:facet>
 
-		<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
-			sortBy="#{movimentacao.descricao}" filterMatchMode="contains"
-			filterBy="#{movimentacao.descricao}">
-			<h:outputText value="#{movimentacao.descricao}" />
-		</p:column>
+			<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
+				sortBy="#{movimentacao.descricao}" filterMatchMode="contains"
+				filterBy="#{movimentacao.descricao}">
+				<h:outputText value="#{movimentacao.descricao}" />
+			</p:column>
 
-		<p:column headerText="Valor" style="width: 150px"
-			sortBy="#{movimentacao.valor}" filterMatchMode="contains"
-			filterBy="#{movimentacao.valor}">
-			<h:outputText value="#{movimentacao.valor}" />
-		</p:column>
+			<p:column headerText="Valor" style="width: 150px"
+				sortBy="#{movimentacao.valor}" filterMatchMode="contains"
+				filterBy="#{movimentacao.valor}">
+				<h:outputText value="#{movimentacao.valor}" />
+			</p:column>
 
-	</p:dataTable>
+		</p:dataTable>
+	</h:form>
 
 </h:body>
 </html>

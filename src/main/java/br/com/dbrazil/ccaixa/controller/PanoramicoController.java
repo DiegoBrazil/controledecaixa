@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.dbrazil.ccaixa.entidade.Caixa;
+import br.com.dbrazil.ccaixa.entidade.Mes;
 import br.com.dbrazil.ccaixa.entidade.Movimentacao;
 import br.com.dbrazil.ccaixa.neg.MovimentacaoNeg;
 import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
@@ -20,8 +21,8 @@ public class PanoramicoController extends GenericFaces {
 	@ManagedProperty("#{movimentacaoNeg}")
 	private MovimentacaoNeg movimentacaoNeg;
 
-	private Integer ano;
-	private Integer mes;
+	private Integer ano = 2010;
+	private Mes mes = Mes.JAN;
 	private Caixa caixa;
 	private List<Caixa> listaCaixa;
 	private Integer entradasMes;
@@ -57,14 +58,14 @@ public class PanoramicoController extends GenericFaces {
 	/**
 	 * @return the mes
 	 */
-	public Integer getMes() {
+	public Mes getMes() {
 		return mes;
 	}
 
 	/**
 	 * @param mes the mes to set
 	 */
-	public void setMes(Integer mes) {
+	public void setMes(Mes mes) {
 		this.mes = mes;
 	}
 
@@ -108,6 +109,10 @@ public class PanoramicoController extends GenericFaces {
 	 */
 	public void setMovimentacaoNeg(MovimentacaoNeg movimentacaoNeg) {
 		this.movimentacaoNeg = movimentacaoNeg;
+	}
+
+	public Mes[] getMeses() {
+		return Mes.values();
 	}
 
 }
