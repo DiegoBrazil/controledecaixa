@@ -42,17 +42,35 @@
 						<h:outputText value="#{movimentacao.id}" />
 					</p:column>
 
+<<<<<<< HEAD
 					<p:column headerText="Data" style="width: 75px">
+=======
+					<p:column headerText="Data" style="width: 75px"
+						sortBy="#{movimentacao.data}" filterMatchMode="contains"
+						filterBy="#{movimentacao.data}">
+>>>>>>> refs/remotes/origin/master
 						<h:outputText value="#{movimentacao.data}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
+<<<<<<< HEAD
 					<p:column headerText="Tipo" style="width: 75px">
+=======
+					<p:column headerText="Tipo" style="width: 75px"
+						sortBy="#{movimentacao.tipo}" filterMatchMode="contains"
+						filterBy="#{movimentacao.tipo}">
+>>>>>>> refs/remotes/origin/master
 						<h:outputText value="#{movimentacao.tipo.descricao}" />
 					</p:column>
 
+<<<<<<< HEAD
 					<p:column headerText="Caixa" style="width: 75px">
+=======
+					<p:column headerText="Caixa" style="width: 75px"
+						sortBy="#{movimentacao.caixa}" filterMatchMode="contains"
+						filterBy="#{movimentacao.caixa}">
+>>>>>>> refs/remotes/origin/master
 						<h:outputText value="#{movimentacao.caixa.descricao}" />
 					</p:column>
 
@@ -60,7 +78,13 @@
 						<h:outputText value="#{movimentacao.descricao}" />
 					</p:column>
 
+<<<<<<< HEAD
 					<p:column headerText="Valor" style="width: 150px">
+=======
+					<p:column headerText="Valor" style="width: 150px"
+						sortBy="#{movimentacao.valor}" filterMatchMode="contains"
+						filterBy="#{movimentacao.valor}">
+>>>>>>> refs/remotes/origin/master
 						<h:outputText value="#{movimentacao.valor}">
 							<f:convertNumber currencySymbol="R$" type="currency" />
 						</h:outputText>
@@ -117,8 +141,13 @@
 						<p:selectOneMenu id="selTipo"
 							value="#{movimentacaoController.movimentacao.tipo}"
 							style="width:125px">
+<<<<<<< HEAD
 							<f:selectItems value="#{movimentacaoController.tipos}" var="tipo"
 								itemValue="#{tipo}" itemLabel="#{tipo.descricao}"
+=======
+							<f:selectItems value="#{movimentacaoController.tipos}"
+								var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}"
+>>>>>>> refs/remotes/origin/master
 								required="true" requiredMessage="Por favor informe o tipo"
 								label="Tipo" />
 						</p:selectOneMenu>
