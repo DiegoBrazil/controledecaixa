@@ -51,19 +51,21 @@
 					<p:column headerText="Data" style="width: 75px"
 						sortBy="#{movimentacao.data}" filterMatchMode="contains"
 						filterBy="#{movimentacao.data}">
-						<h:outputText value="#{movimentacao.data}" />
+						<h:outputText value="#{movimentacao.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Tipo" style="width: 75px"
 						sortBy="#{movimentacao.tipo}" filterMatchMode="contains"
 						filterBy="#{movimentacao.tipo}">
-						<h:outputText value="#{movimentacao.tipo}" />
+						<h:outputText value="#{movimentacao.tipo.descricao}" />
 					</p:column>
 
 					<p:column headerText="Caixa" style="width: 75px"
 						sortBy="#{movimentacao.caixa}" filterMatchMode="contains"
 						filterBy="#{movimentacao.caixa}">
-						<h:outputText value="#{movimentacao.caixa}" />
+						<h:outputText value="#{movimentacao.caixa.descricao}" />
 					</p:column>
 
 					<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
@@ -75,7 +77,9 @@
 					<p:column headerText="Valor" style="width: 150px"
 						sortBy="#{movimentacao.valor}" filterMatchMode="contains"
 						filterBy="#{movimentacao.valor}">
-						<h:outputText value="#{movimentacao.valor}" />
+						<h:outputText value="#{movimentacao.valor}">
+							<f:convertNumber currencySymbol="R$" type="currency" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Excluir"
@@ -119,26 +123,29 @@
 							disabled="true" value="#{movimentacaoController.movimentacao.id}"
 							size="10" label="C&oacute;digo" />
 
-						<h:outputLabel value="Data" for="txtData" />
-						<p:inputText id="txtData"
+						<h:outputLabel value="Data" for="calData" />
+						<p:calendar id="calData"
 							value="#{movimentacaoController.movimentacao.data}"
-							maxlength="250" size="40" placeholder="Informe a data"
-							required="true" requiredMessage="Por favor informe a data."
-							label="data" />
+							pattern="dd/MM/yyyy" mask="true" required="true"
+							requiredMessage="Por favor informe a data." label="Data" />
 
 						<h:outputLabel value="Tipo" for="txtTipo" />
-						<p:inputText id="txtTipo"
+						<p:selectOneMenu id="selTipo"
 							value="#{movimentacaoController.movimentacao.tipo}"
-							maxlength="250" size="40" placeholder="Informe o tipo"
-							required="true" requiredMessage="Por favor informe o tipo"
-							label="tipo" />
+							style="width:125px">
+							<f:selectItems value="#{movimentacaoController.tipos}"
+								var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}"
+								required="true" requiredMessage="Por favor informe o tipo"
+								label="Tipo" />
+						</p:selectOneMenu>
 
 						<h:outputLabel value="Caixa" for="txtCaixa" />
-						<p:inputText id="txtCaixa"
+						<p:selectOneMenu id="selCaixa"
 							value="#{movimentacaoController.movimentacao.caixa}"
-							maxlength="250" size="40" placeholder="Informe o caixa"
-							required="true" requiredMessage="Por favor informe o caixa."
-							label="caixa" />
+							style="width:125px" converter="simpleEntityConverter">
+							<f:selectItems value="#{movimentacaoController.listaCaixa}"
+								var="caixa" itemValue="#{caixa}" itemLabel="#{caixa.descricao}" />
+						</p:selectOneMenu>
 
 						<h:outputLabel value="Descrição" for="txtDescricao" />
 						<p:inputText id="txtDescricao"
@@ -149,11 +156,13 @@
 							label="descri&ccedil;&atilde;o" />
 
 						<h:outputLabel value="Valor" for="txtValor" />
-						<p:inputText id="txtValor"
-							value="#{movimentacaoController.movimentacao.valor}"
-							maxlength="250" size="40" placeholder="Informe o valor"
-							required="true" requiredMessage="Por favor informe valor."
-							label="valor" />
+						<p:inputNumber id="txtValor"
+							value="#{movimentacaoController.movimentacao.valor}" symbol="R$"
+							decimalSeparator="," thousandSeparator="." maxlength="250"
+							size="40" placeholder="Informe o valor" required="true"
+							requiredMessage="Por favor informe valor." label="Valor">
+						</p:inputNumber>
+
 					</p:panelGrid>
 
 					<f:facet name="footer" style="text-align:center">

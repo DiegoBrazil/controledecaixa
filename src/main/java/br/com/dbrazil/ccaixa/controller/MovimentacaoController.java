@@ -2,11 +2,15 @@ package br.com.dbrazil.ccaixa.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import br.com.dbrazil.ccaixa.entidade.Caixa;
 import br.com.dbrazil.ccaixa.entidade.Movimentacao;
+import br.com.dbrazil.ccaixa.entidade.TipoMovimentacao;
+import br.com.dbrazil.ccaixa.neg.CaixaNeg;
 import br.com.dbrazil.ccaixa.neg.MovimentacaoNeg;
 import br.com.dbrazil.ccaixa.util.exception.ValidarException;
 import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
@@ -16,13 +20,18 @@ import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
 public class MovimentacaoController extends GenericFaces {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManagedProperty("#{movimentacaoNeg}")
 	private MovimentacaoNeg movimentacaoNeg;
+
+	@ManagedProperty("#{caixaNeg}")
+	private CaixaNeg caixaNeg;
 
 	private Movimentacao movimentacao;
 	private Movimentacao movimentacaoSelecionado;
 	private List<Movimentacao> listaMovimentacao;
+	private Caixa caixa;
+	private List<Caixa> listaCaixa;
 
 	public MovimentacaoController() {
 		super();
@@ -30,6 +39,12 @@ public class MovimentacaoController extends GenericFaces {
 
 	public void novo() {
 		movimentacao = new Movimentacao();
+	}
+
+	@PostConstruct
+	public void init() {
+		movimentacao = new Movimentacao();
+		listaCaixa = caixaNeg.listaTudo();
 	}
 
 	public void salvar() {
@@ -60,6 +75,10 @@ public class MovimentacaoController extends GenericFaces {
 		} else {
 			this.addInfoMensagem("Selecione um ambiente.");
 		}
+	}
+
+	public TipoMovimentacao[] getTipos() {
+		return TipoMovimentacao.values();
 	}
 
 	public List<Movimentacao> listar() {
@@ -108,5 +127,35 @@ public class MovimentacaoController extends GenericFaces {
 	public void setMovimentacaoNeg(MovimentacaoNeg movimentacaoNeg) {
 		this.movimentacaoNeg = movimentacaoNeg;
 	}
-	
+
+	public Caixa getCaixa() {
+		return caixa;
+	}
+
+	public void setCaixa(Caixa caixa) {
+		this.caixa = caixa;
+	}
+
+	public List<Caixa> getListaCaixa() {
+		return listaCaixa;
+	}
+
+	public void setListaCaixa(List<Caixa> listaCaixa) {
+		this.listaCaixa = listaCaixa;
+	}
+
+	/**
+	 * @return the caixaNeg
+	 */
+	public CaixaNeg getCaixaNeg() {
+		return caixaNeg;
+	}
+
+	/**
+	 * @param caixaNeg the caixaNeg to set
+	 */
+	public void setCaixaNeg(CaixaNeg caixaNeg) {
+		this.caixaNeg = caixaNeg;
+	}
+
 }
