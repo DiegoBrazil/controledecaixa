@@ -49,22 +49,22 @@
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel value="Entradas:" style="width:125px" />
-					<p:outputLabel value="Entradas" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['entradaMes']}" style="width:125px" />
 					<p:outputLabel value="Saídas:" style="width:125px" />
-					<p:outputLabel value="Saídas" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saidaMes']}" style="width:125px" />
 					<p:outputLabel value="Saldo:" style="width:125px" />
-					<p:outputLabel value="Saldo" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saldoMes']}" style="width:125px" />
 				</h:panelGrid>
 			</p:fieldset>
 
 			<p:fieldset legend="Balanço Geral" style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel value="Entradas:" style="width:125px" />
-					<p:outputLabel value="Entradas" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['entrada']}" style="width:125px" />
 					<p:outputLabel value="Saídas:" style="width:125px" />
-					<p:outputLabel value="Saídas" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saida']}" style="width:125px" />
 					<p:outputLabel value="Saldo:" style="width:125px" />
-					<p:outputLabel value="Saldo" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saldo']}" style="width:125px" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:panelGrid>

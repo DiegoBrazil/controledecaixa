@@ -2,6 +2,7 @@ package br.com.dbrazil.ccaixa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -31,13 +32,8 @@ public class PanoramicoController extends GenericFaces {
 	private Mes mes;
 	private Caixa caixa;
 	private List<Caixa> listaCaixa;
+	private Map<String,Double> panoramico;
 	private List<Integer> listaAno;
-	private Integer entradasMes;
-	private Integer saidasMes;
-	private Integer saldoMes;
-	private Integer entradass;
-	private Integer saidas;
-	private Integer saldo;
 	private List<Movimentacao> movimentacoesMes;
 
 	public PanoramicoController() {
@@ -47,17 +43,19 @@ public class PanoramicoController extends GenericFaces {
 	@PostConstruct
 	public void init() {
 		listaCaixa = caixaNeg.listaTudo();
-		caixa = listaCaixa.get(1);
+		caixa = listaCaixa.get(0);
 		mes = Mes.JAN;
 		listaAno = new ArrayList<Integer>();
 		listaAno.add(2010);
 		listaAno.add(2011);
 		listaAno.add(2012);
 		ano = listaAno.get(0);
+		panoramico = movimentacaoNeg.panoramico(mes.getValor(), ano, caixa);
 	}
 
 	public void calcular() {
 		movimentacoesMes = movimentacaoNeg.listaPorMesAnoCaixa(mes.getValor(), ano, caixa);
+		panoramico = movimentacaoNeg.panoramico(mes.getValor(), ano, caixa);
 	}
 
 	/**
@@ -161,6 +159,14 @@ public class PanoramicoController extends GenericFaces {
 
 	public void setListaAno(List<Integer> listaAno) {
 		this.listaAno = listaAno;
+	}
+
+	public Map<String,Double> getPanoramico() {
+		return panoramico;
+	}
+
+	public void setPanoramico(Map<String,Double> panoramico) {
+		this.panoramico = panoramico;
 	}
 
 }

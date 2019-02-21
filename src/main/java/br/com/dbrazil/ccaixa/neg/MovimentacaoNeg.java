@@ -1,6 +1,7 @@
 package br.com.dbrazil.ccaixa.neg;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,10 @@ public class MovimentacaoNeg extends GenericNegImpl<Movimentacao, Integer> {
 	public List<Movimentacao> listaPorMesAnoCaixa(Integer mes, Integer ano, Caixa caixa) {
 		return ((MovimentacaoDao) getDao()).listaPorMesAnoCaixa(mes, ano, caixa);
 	}
+
+	public Map<String, Double> panoramico(Integer mes, Integer ano, Caixa caixa) {
+		return ((MovimentacaoDao) getDao()).panoramico(mes, ano, caixa);
+	}
+
 
 }
