@@ -43,12 +43,12 @@ public class PanoramicoController extends GenericFaces {
 	@PostConstruct
 	public void init() {
 		listaCaixa = caixaNeg.listaTudo();
-		caixa = listaCaixa.get(0);
+		caixa = listaCaixa.isEmpty() ? null : listaCaixa.get(0);
 		mes = Mes.JAN;
 		listaAno = new ArrayList<Integer>();
-		listaAno.add(2010);
-		listaAno.add(2011);
-		listaAno.add(2012);
+		for (int i = 2010; i < 2020; i++) {
+			listaAno.add(i);
+		}
 		ano = listaAno.get(0);
 		panoramico = movimentacaoNeg.panoramico(mes.getValor(), ano, caixa);
 	}

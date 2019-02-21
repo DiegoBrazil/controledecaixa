@@ -27,7 +27,7 @@ public class MovimentacaoDaoImpl extends DaoGenericoJpa<Movimentacao, Integer> i
 		sql.append("select m.descricao, m.valor from movimentacao m ");
 		sql.append("where extract(month from m.data) = :mes ");
 		sql.append("and extract(year from m.data) = :ano ");
-		sql.append("and m.caixa_id = :idCaixa ");
+		sql.append("and m.caixa = :idCaixa ");
 
 		Query query = super.getEntityManager().createNativeQuery(sql.toString());
 		query.setParameter("mes", mes);
@@ -61,7 +61,7 @@ public class MovimentacaoDaoImpl extends DaoGenericoJpa<Movimentacao, Integer> i
 		sql.append("from movimentacao ");
 		sql.append("where extract(month from data) = :mes ");
 		sql.append("and extract(year from data) = :ano ");
-		sql.append("and caixa_id = :idCaixa) mm, ");
+		sql.append("and caixa = :idCaixa) mm, ");
 		sql.append("(select ");
 		sql.append("sum(case when tipo = 'E' then valor else 0 end) as entrada, ");
 		sql.append("sum(case when tipo = 'S' then valor else 0 end) as saida ");
@@ -74,12 +74,12 @@ public class MovimentacaoDaoImpl extends DaoGenericoJpa<Movimentacao, Integer> i
 
 		Map<String, Double> retorno = new HashMap<String, Double>();
 		Object obj = query.getSingleResult();
-		retorno.put("entradaMes", (Double) ((Object[]) obj)[0]);
-		retorno.put("saidaMes", (Double) ((Object[]) obj)[1]);
-		retorno.put("saldoMes", (Double) ((Object[]) obj)[2]);
-		retorno.put("entrada", (Double) ((Object[]) obj)[3]);
-		retorno.put("saida", (Double) ((Object[]) obj)[4]);
-		retorno.put("saldo", (Double) ((Object[]) obj)[5]);
+		retorno.put("entradaMes", (Double) ((Object[]) obj)[0] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[0]);
+		retorno.put("saidaMes", (Double) ((Object[]) obj)[1] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[1]);
+		retorno.put("saldoMes", (Double) ((Object[]) obj)[2] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[2]);
+		retorno.put("entrada", (Double) ((Object[]) obj)[3] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[3]);
+		retorno.put("saida", (Double) ((Object[]) obj)[4] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[4]);
+		retorno.put("saldo", (Double) ((Object[]) obj)[5] == null ? Double.valueOf(0) : (Double) ((Object[]) obj)[5]);
 		return retorno;
 	}
 

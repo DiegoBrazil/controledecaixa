@@ -13,7 +13,7 @@ public class Caixa extends Entidade{
 	@Column(name = "descricao")
 	private String descricao;
 
-	@Column(name = "saldo_inicial")
+	@Column(name = "saldoInicial")
 	private String saldoInicial;
 
 	/**

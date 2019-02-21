@@ -49,45 +49,55 @@
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel value="Entradas:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['entradaMes']}" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['entradaMes']}" style="width:125px" >
+						<f:convertNumber currencySymbol="" type="currency" />
+					</p:outputLabel>
 					<p:outputLabel value="Saídas:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['saidaMes']}" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saidaMes']}" style="width:125px">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</p:outputLabel>
 					<p:outputLabel value="Saldo:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['saldoMes']}" style="width:125px" />
+					<p:outputLabel
+						value="#{panoramicoController.panoramico['saldoMes']}"
+						style="width:125px;#{panoramicoController.panoramico['saldoMes'] lt 0 ? 'color:red;':'color:#333333;'}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</p:outputLabel>
 				</h:panelGrid>
 			</p:fieldset>
 
 			<p:fieldset legend="Balanço Geral" style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel value="Entradas:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['entrada']}" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['entrada']}" style="width:125px">
+					<f:convertNumber currencySymbol="" type="currency" />
+						</p:outputLabel>
 					<p:outputLabel value="Saídas:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['saida']}" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saida']}" style="width:125px">
+					<f:convertNumber currencySymbol="" type="currency" />
+						</p:outputLabel>
 					<p:outputLabel value="Saldo:" style="width:125px" />
-					<p:outputLabel value="#{panoramicoController.panoramico['saldo']}" style="width:125px" />
+					<p:outputLabel value="#{panoramicoController.panoramico['saldo']}"
+						style="width:125px;#{panoramicoController.panoramico['saldo'] lt 0 ? 'color:red;':'color:#333333;'}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</p:outputLabel>
 				</h:panelGrid>
 			</p:fieldset>
 		</h:panelGrid>
 
 		<p:dataTable id="tbMovimentacoes"
 			value="#{panoramicoController.movimentacoesMes}" var="movimentacao"
-			paginatorPosition="bottom" rows="5" paginator="true"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="5,10,15"
-			emptyMessage="Registros não encontrados" filterEvent="enter"
+			emptyMessage="Registros não encontrados"
 			rowKey="#{movimentacao.id}">
 			<f:facet name="header">Movimentações do Mês</f:facet>
 
-			<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
-				sortBy="#{movimentacao.descricao}" filterMatchMode="contains"
-				filterBy="#{movimentacao.descricao}">
+			<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px">
 				<h:outputText value="#{movimentacao.descricao}" />
 			</p:column>
 
-			<p:column headerText="Valor" style="width: 150px"
-				sortBy="#{movimentacao.valor}" filterMatchMode="contains"
-				filterBy="#{movimentacao.valor}">
-				<h:outputText value="#{movimentacao.valor}" />
+			<p:column headerText="Valor" style="width: 150px">
+				<h:outputText value="#{movimentacao.valor}">
+					<f:convertNumber currencySymbol="R$" type="currency" />
+				</h:outputText>
 			</p:column>
 
 		</p:dataTable>

@@ -28,32 +28,26 @@
 				<p:growl />
 				<p:dataTable id="tbCaixas" value="#{caixaController.listar()}"
 					var="caixa" paginatorPosition="bottom" rows="5" paginator="true"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15"
 					emptyMessage="Registros não encontrados"
-					selection="#{caixaController.caixa}" filterEvent="enter"
-					rowKey="#{caixa.id}" selectionMode="single">
+					selection="#{caixaController.caixa}" rowKey="#{caixa.id}"
+					selectionMode="single">
 					<f:facet name="header">Caixas</f:facet>
 
 					<p:ajax event="rowSelect" listener="#{caixaController.editar}"
 						update="cadastro" oncomplete="PF('dlg1').show();" />
 
-					<p:column headerText="C&oacute;digo" style="width: 75px"
-						sortBy="#{caixa.id}" filterMatchMode="contains"
-						filterBy="#{caixa.id}">
+					<p:column headerText="C&oacute;digo" style="width: 75px">
 						<h:outputText value="#{caixa.id}" />
 					</p:column>
 
-					<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px"
-						sortBy="#{caixa.descricao}" filterMatchMode="contains"
-						filterBy="#{caixa.descricao}">
+					<p:column headerText="Descri&ccedil;&atilde;o" style="width: 150px">
 						<h:outputText value="#{caixa.descricao}" />
 					</p:column>
 
-					<p:column headerText="Saldo Inicial" style="width: 150px"
-						sortBy="#{caixa.saldoInicial}" filterMatchMode="contains"
-						filterBy="#{caixa.saldoInicial}">
-						<h:outputText value="#{caixa.saldoInicial}" />
+					<p:column headerText="Saldo Inicial" style="width: 150px">
+						<h:outputText value="#{caixa.saldoInicial}">
+							<f:convertNumber currencySymbol="R$" type="currency" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Excluir"
@@ -105,11 +99,13 @@
 							label="descri&ccedil;&atilde;o" />
 
 						<h:outputLabel value="Saldo Inicial" for="txtSaldoInicial" />
-						<p:inputText id="txtSaldoInicial"
-							value="#{caixaController.caixa.saldoInicial}" maxlength="250"
-							size="40" placeholder="Informe o saldo inicial" required="true"
+						<p:inputNumber id="txtSaldoInicial"
+							value="#{caixaController.caixa.saldoInicial}" symbol="R$"
+							decimalSeparator="," thousandSeparator="." maxlength="250"
+							size="40" placeholder="Informe o valor" required="true"
 							requiredMessage="Por favor informe saldo inicial."
-							label="saldo inicial" />
+							label="Saldo Inicial">
+						</p:inputNumber>
 					</p:panelGrid>
 
 					<f:facet name="footer" style="text-align:center">
