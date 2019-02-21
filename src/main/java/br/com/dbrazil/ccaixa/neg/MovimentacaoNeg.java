@@ -1,6 +1,5 @@
 package br.com.dbrazil.ccaixa.neg;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +51,8 @@ public class MovimentacaoNeg extends GenericNegImpl<Movimentacao, Integer> {
 		}
 	}
 
-	public List<Movimentacao> listarPeloNome(String nome) {
-		if (nome == null || nome.trim().isEmpty()) {
-			return new ArrayList<Movimentacao>();
-		}
-		return ((MovimentacaoDao) getDao()).listarPeloNome(nome);
+	public List<Movimentacao> listaPorMesAno(Integer mes, Integer ano) {
+		return ((MovimentacaoDao) getDao()).listaPorMesAno(mes, ano);
 	}
 
 }

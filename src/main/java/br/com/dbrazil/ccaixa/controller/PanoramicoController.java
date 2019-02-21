@@ -37,8 +37,8 @@ public class PanoramicoController extends GenericFaces {
 		super();
 	}
 
-	public List<Movimentacao> listar() {
-		return movimentacaoNeg.listaTudo();
+	public void calcular() {
+		movimentacoesMes = movimentacaoNeg.listaPorMesAno(mes.getValor(), ano);
 	}
 
 	/**
@@ -88,13 +88,6 @@ public class PanoramicoController extends GenericFaces {
 	 */
 	public List<Movimentacao> getMovimentacoesMes() {
 		return movimentacoesMes;
-	}
-
-	/**
-	 * @param movimentacoesMes the movimentacoesMes to set
-	 */
-	public void setMovimentacoesMes(List<Movimentacao> movimentacoesMes) {
-		this.movimentacoesMes = movimentacoesMes;
 	}
 
 	/**

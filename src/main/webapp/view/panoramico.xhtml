@@ -13,6 +13,7 @@
 	<h:form id="frmPanoramico" prependId="false">
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 			<p:selectOneMenu id="selAno" value="#{panoramicoController.ano}"
+				onchange="#{panoramicoController.calcular()}"
 				style="width:125px">
 				<f:selectItem itemLabel="2010" itemValue="2010" />
 				<f:selectItem itemLabel="2011" itemValue="2011" />
@@ -21,10 +22,11 @@
 				<p:ajax event="change" update="@(form)" />
 			</p:selectOneMenu>
 
-			<p:selectOneButton id="selMes" value="#{panoramicoController.mes}">
+			<p:selectOneButton id="selMes" value="#{panoramicoController.mes}"
+				onchange="#{panoramicoController.calcular()}">
 				<f:selectItems value="#{panoramicoController.meses}" var="mes"
 					itemValue="#{mes}" itemLabel="#{mes.descricao}" />
-					<p:ajax event="change" update="@(form)" />
+				<p:ajax event="change" update="@(form)" />
 			</p:selectOneButton>
 		</h:panelGrid>
 
