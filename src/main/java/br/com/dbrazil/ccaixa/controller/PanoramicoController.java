@@ -1,7 +1,9 @@
 package br.com.dbrazil.ccaixa.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -9,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.dbrazil.ccaixa.entidade.Caixa;
 import br.com.dbrazil.ccaixa.entidade.Mes;
 import br.com.dbrazil.ccaixa.entidade.Movimentacao;
+import br.com.dbrazil.ccaixa.neg.CaixaNeg;
 import br.com.dbrazil.ccaixa.neg.MovimentacaoNeg;
 import br.com.dbrazil.ccaixa.util.faces.GenericFaces;
 
@@ -21,10 +24,14 @@ public class PanoramicoController extends GenericFaces {
 	@ManagedProperty("#{movimentacaoNeg}")
 	private MovimentacaoNeg movimentacaoNeg;
 
-	private Integer ano = 2010;
-	private Mes mes = Mes.JAN;
+	@ManagedProperty("#{caixaNeg}")
+	private CaixaNeg caixaNeg;
+
+	private Integer ano;
+	private Mes mes;
 	private Caixa caixa;
 	private List<Caixa> listaCaixa;
+	private List<Integer> listaAno;
 	private Integer entradasMes;
 	private Integer saidasMes;
 	private Integer saldoMes;
@@ -37,8 +44,20 @@ public class PanoramicoController extends GenericFaces {
 		super();
 	}
 
+	@PostConstruct
+	public void init() {
+		listaCaixa = caixaNeg.listaTudo();
+		caixa = listaCaixa.get(1);
+		mes = Mes.JAN;
+		listaAno = new ArrayList<Integer>();
+		listaAno.add(2010);
+		listaAno.add(2011);
+		listaAno.add(2012);
+		ano = listaAno.get(0);
+	}
+
 	public void calcular() {
-		movimentacoesMes = movimentacaoNeg.listaPorMesAno(mes.getValor(), ano);
+		movimentacoesMes = movimentacaoNeg.listaPorMesAnoCaixa(mes.getValor(), ano, caixa);
 	}
 
 	/**
@@ -104,8 +123,44 @@ public class PanoramicoController extends GenericFaces {
 		this.movimentacaoNeg = movimentacaoNeg;
 	}
 
+	/**
+	 * @return the caixaNeg
+	 */
+	public CaixaNeg getCaixaNeg() {
+		return caixaNeg;
+	}
+
+	/**
+	 * @param caixaNeg the caixaNeg to set
+	 */
+	public void setCaixaNeg(CaixaNeg caixaNeg) {
+		this.caixaNeg = caixaNeg;
+	}
+
+	/**
+	 * @return the listaCaixa
+	 */
+	public List<Caixa> getListaCaixa() {
+		return listaCaixa;
+	}
+
+	/**
+	 * @param listaCaixa the listaCaixa to set
+	 */
+	public void setListaCaixa(List<Caixa> listaCaixa) {
+		this.listaCaixa = listaCaixa;
+	}
+
 	public Mes[] getMeses() {
 		return Mes.values();
+	}
+
+	public List<Integer> getListaAno() {
+		return listaAno;
+	}
+
+	public void setListaAno(List<Integer> listaAno) {
+		this.listaAno = listaAno;
 	}
 
 }

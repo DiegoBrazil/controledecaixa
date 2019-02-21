@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.dbrazil.ccaixa.dao.MovimentacaoDao;
+import br.com.dbrazil.ccaixa.entidade.Caixa;
 import br.com.dbrazil.ccaixa.entidade.Movimentacao;
 import br.com.dbrazil.ccaixa.util.exception.ValidarException;
 
@@ -51,8 +52,8 @@ public class MovimentacaoNeg extends GenericNegImpl<Movimentacao, Integer> {
 		}
 	}
 
-	public List<Movimentacao> listaPorMesAno(Integer mes, Integer ano) {
-		return ((MovimentacaoDao) getDao()).listaPorMesAno(mes, ano);
+	public List<Movimentacao> listaPorMesAnoCaixa(Integer mes, Integer ano, Caixa caixa) {
+		return ((MovimentacaoDao) getDao()).listaPorMesAnoCaixa(mes, ano, caixa);
 	}
 
 }

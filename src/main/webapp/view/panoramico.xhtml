@@ -13,12 +13,9 @@
 	<h:form id="frmPanoramico" prependId="false">
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 			<p:selectOneMenu id="selAno" value="#{panoramicoController.ano}"
-				onchange="#{panoramicoController.calcular()}"
-				style="width:125px">
-				<f:selectItem itemLabel="2010" itemValue="2010" />
-				<f:selectItem itemLabel="2011" itemValue="2011" />
-				<f:selectItem itemLabel="2012" itemValue="2012" />
-				<f:selectItem itemLabel="2013" itemValue="2013" />
+				onchange="#{panoramicoController.calcular()}" style="width:125px">
+				<f:selectItems value="#{panoramicoController.listaAno}" var="ano"
+					itemValue="#{ano}" itemLabel="#{ano}" />
 				<p:ajax event="change" update="@(form)" />
 			</p:selectOneMenu>
 
@@ -37,8 +34,11 @@
 
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel for="selCaixa" value="Caixa" />
-				<p:selectOneMenu id="selCaixa" value="#{panoramicoController.caixa}">
-					<f:selectItem itemLabel="Conta Corrente - Itau" itemValue="2" />
+				<p:selectOneMenu id="selCaixa" value="#{panoramicoController.caixa}"
+					onchange="#{panoramicoController.calcular()}"
+					converter="simpleEntityConverter">
+					<f:selectItems value="#{panoramicoController.listaCaixa}"
+						var="caixa" itemValue="#{caixa}" itemLabel="#{caixa.descricao}" />
 					<p:ajax event="change" update="@(form)" />
 				</p:selectOneMenu>
 			</h:panelGrid>

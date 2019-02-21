@@ -7,4 +7,8 @@
 	<application>  
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>  
     </application>
+    <converter>
+	    <converter-id>simpleEntityConverter</converter-id>
+	    <converter-class>br.com.dbrazil.ccaixa.util.faces.SimpleEntityConverter</converter-class>
+	</converter>
 </faces-config>
